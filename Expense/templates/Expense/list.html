@@ -6,20 +6,23 @@
         <div class="col-md-8">
             <div class="card shadow-lg p-4">
                 <h2 class="text-center text-primary mb-4">📊 Expense Tracker</h2>
-                
-                <div class="d-flex justify-content-between mb-3">
+
+                <div class="d-flex justify-content-between align-items-center mb-3">
                     <h4 class="text-muted">Your Expenses</h4>
-                    <a href="{% url 'add_expense' %}" class="btn btn-success">➕ Add Expense</a>
+                    <div>
+                        <a href="{% url 'set_salary' %}" class="btn btn-outline-warning me-2">💰 Set Salary</a>
+                        <a href="{% url 'add_expense' %}" class="btn btn-success">➕ Add Expense</a>
+                    </div>
                 </div>
-                
-                <div class="mb-4 p-3 bg-light border rounded">
-                    <h5>💰 Monthly Salary: <span class="text-success">${{ salary }}</span></h5>
-                    <h5>🛒 Total Expenses: <span class="text-danger">${{ total_expense }}</span></h5>
-                    <h5>💵 Money Left: <span class="text-primary">${{ money_left }}</span></h5>
+
+                <div class="mb-4 p-3 bg-light border rounded shadow-sm">
+                    <h5>💰 Monthly Salary: <span class="text-success fw-bold">₹{{ salary }}</span></h5>
+                    <h5>🛒 Total Expenses: <span class="text-danger fw-bold">₹{{ total_expense }}</span></h5>
+                    <h5>💵 Money Left: <span class="text-primary fw-bold">₹{{ money_left }}</span></h5>
                 </div>
-                
+
                 {% if expenses %}
-                    <table class="table table-hover text-center">
+                    <table class="table table-hover text-center shadow-sm">
                         <thead class="table-dark">
                             <tr>
                                 <th>Category</th>
@@ -32,10 +35,10 @@
                             {% for expense in expenses %}
                             <tr>
                                 <td>{{ expense.category }}</td>
-                                <td>${{ expense.amount }}</td>
+                                <td class="fw-bold text-danger">₹{{ expense.amount }}</td>
                                 <td>{{ expense.date }}</td>
                                 <td>
-                                    <a href="{% url 'delete_expense' expense.id %}" class="btn btn-danger btn-sm">🗑️ Delete</a>
+                                    <a href="{% url 'delete_expense' expense.id %}" class="btn btn-outline-danger btn-sm">🗑️ Delete</a>
                                 </td>
                             </tr>
                             {% endfor %}
@@ -44,9 +47,9 @@
                 {% else %}
                     <p class="text-center text-muted">No expenses added yet. Start tracking now! 📈</p>
                 {% endif %}
-                
+
                 <div class="text-center mt-4">
-                    <a href="{% url 'expense_analysis' %}" class="btn btn-info">📊 View Detailed Analysis</a>
+                    <a href="{% url 'expense_analysis' %}" class="btn btn-info btn-lg shadow-sm">📊 View Detailed Analysis</a>
                 </div>
             </div>
         </div>
@@ -64,8 +67,12 @@
     }
     .btn {
         font-size: 16px;
-        padding: 8px 12px;
+        padding: 10px 15px;
         border-radius: 8px;
+        transition: 0.3s;
+    }
+    .btn:hover {
+        transform: scale(1.05);
     }
     .table {
         border-radius: 8px;

@@ -1,35 +1,39 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Expense, Category, Salary
-from .forms import ExpenseForm
+from .forms import ExpenseForm, SalaryForm
 from django.utils import timezone
 import matplotlib.pyplot as plt
 import base64
 from io import BytesIO
-from django.shortcuts import render
-from .models import Expense
 
+# Function to generate a pie chart for expense categories
 def generate_pie_chart(expenses):
     category_totals = {}
-    
+
     for expense in expenses:
         category = expense.category.name
         category_totals[category] = category_totals.get(category, 0) + expense.amount
 
     if not category_totals:
-        return None  # No data to show
-    
+        return None  # No data to display
+
     fig, ax = plt.subplots()
-    ax.pie(category_totals.values(), labels=category_totals.keys(), autopct='%1.1f%%', startangle=90, colors=["#FF5733", "#33FF57", "#3357FF", "#F333FF"])
-    ax.axis('equal')  
+    colors = ["#FF5733", "#33FF57", "#3357FF", "#F333FF", "#57FFF3", "#FFC300"]
+    
+    ax.pie(category_totals.values(), labels=category_totals.keys(), autopct='%1.1f%%', startangle=90, colors=colors)
+    ax.axis('equal')  # Equal aspect ratio for a perfect circle
 
     buffer = BytesIO()
     plt.savefig(buffer, format='png')
     plt.close(fig)
     buffer.seek(0)
     encoded_chart = base64.b64encode(buffer.getvalue()).decode('utf-8')
+    
     return f"data:image/png;base64,{encoded_chart}"
 
+# View for detailed expense analysis
+@login_required
 def expense_analysis(request):
     expenses = Expense.objects.filter(user=request.user)
     total_expense = sum(exp.amount for exp in expenses)
@@ -40,16 +44,14 @@ def expense_analysis(request):
         'expense_chart': expense_chart
     })
 
-
-
+# View to list all expenses
+@login_required
 def expense_list(request):
     expenses = Expense.objects.filter(user=request.user)
     total_expense = sum(exp.amount for exp in expenses)
     
-    salary_obj, created = Salary.objects.get_or_create(user=request.user)
+    salary_obj, created = Salary.objects.get_or_create(user=request.user, defaults={'amount': 0})
     money_left = salary_obj.amount - total_expense
-
-    print(f"Total Expenses: {total_expense}")
 
     return render(request, 'Expense/list.html', {
         'expenses': expenses,
@@ -58,21 +60,41 @@ def expense_list(request):
         'total_expense': total_expense
     })
 
+# View to add a new expense with date selection
+@login_required
 def add_expense(request):
     if request.method == "POST":
         form = ExpenseForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('expense_list')  # Redirect after saving
+            expense = form.save(commit=False)
+            expense.user = request.user  # Assign the expense to the logged-in user
+            expense.save()
+            return redirect('expense_list')
     else:
         form = ExpenseForm()
 
     return render(request, 'Expense/add.html', {'form': form})
 
-
+# View to delete an expense
+@login_required
 def delete_expense(request, id):
     expense = get_object_or_404(Expense, id=id, user=request.user)
     if request.method == 'POST':
         expense.delete()
         return redirect('expense_list')
     return render(request, 'Expense/delete.html', {'expense': expense})
+
+# View to set or update the monthly salary
+@login_required
+def set_salary(request):
+    salary, created = Salary.objects.get_or_create(user=request.user, defaults={'amount': 0})
+
+    if request.method == "POST":
+        form = SalaryForm(request.POST, instance=salary)
+        if form.is_valid():
+            form.save()
+            return redirect('expense_list')
+    else:
+        form = SalaryForm(instance=salary)
+
+    return render(request, 'Expense/salary.html', {'form': form})

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Expense
+from .models import Expense, Salary
 
 class ExpenseForm(forms.ModelForm):
     date = forms.DateField(
@@ -10,3 +10,9 @@ class ExpenseForm(forms.ModelForm):
     class Meta:
         model = Expense
         fields = ['category', 'amount', 'description', 'date']
+
+class SalaryForm(forms.ModelForm):
+    class Meta:
+        model = Salary
+        fields = ['amount']
+
