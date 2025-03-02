@@ -56,6 +56,8 @@ Expense Tracker is a Django-based web application that allows users to manage th
 
 ## Screenshots
 ![image](https://github.com/user-attachments/assets/9e918a48-294f-4b06-9c2e-6e05ad3d5b0d)
+![image](https://github.com/user-attachments/assets/cbef6573-e167-4b49-a7f5-9ed21228099b)
+
 
 
 ## Contributing
