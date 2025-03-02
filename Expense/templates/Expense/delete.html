@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg p-4 text-center">
+                <h2 class="text-danger mb-3">⚠️ Confirm Deletion</h2>
+                <p class="fs-5">Are you sure you want to delete this expense?</p>
+
+                <form method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger w-50">🗑️ Delete</button>
+                    <a href="{% url 'expense_list' %}" class="btn btn-secondary w-50 mt-2">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+    
+    .card {
+        border-radius: 12px;
+        border: none;
+        background: #fff;
+    }
+
+    button, a {
+        font-size: 18px;
+        padding: 10px;
+        border-radius: 8px;
+    }
+
+    .text-danger {
+        font-weight: bold;
+    }
+</style>
+{% endblock %}
