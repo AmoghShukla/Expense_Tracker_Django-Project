@@ -46,3 +46,20 @@ Expense Tracker is a Django-based web application that allows users to manage th
    ```
    http://127.0.0.1:8000/
    ```
+
+## Usage
+- **Sign up/Login** to start tracking expenses.
+- **Enter your monthly salary** in the dashboard.
+- **Add expenses** with appropriate categories.
+- **View real-time updates** on remaining money.
+- **Click on 'Detailed Analysis'** to get insights and graphs.
+
+## Screenshots
+![image](https://github.com/user-attachments/assets/9e918a48-294f-4b06-9c2e-6e05ad3d5b0d)
+
+
+## Contributing
+Feel free to fork this repository and submit pull requests for new features or improvements.
+
+## License
+This project is open-source and available under the [MIT License](LICENSE).
