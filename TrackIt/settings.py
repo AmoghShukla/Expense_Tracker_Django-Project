@@ -25,8 +25,9 @@ SECRET_KEY = 'django-insecure-*6$=rc5x+wsk8y!@@84h%htued6n7y81y&kv^=t6d76vo@cka(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["expense-tracker-django-project.onrender.com", "127.0.0.1", "localhost"]
 
+LOGIN_URL = '/'  # Redirect to home instead of login
 
 # Application definition
 
@@ -83,24 +84,6 @@ DATABASES = {
     }
 }
 
-
-# Password validation
-# https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
-
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
-]
 
 
 # Internationalization

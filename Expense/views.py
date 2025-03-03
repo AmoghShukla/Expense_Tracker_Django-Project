@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
 from .models import Expense, Category, Salary
 from .forms import ExpenseForm, SalaryForm
 from django.utils import timezone
@@ -33,9 +32,8 @@ def generate_pie_chart(expenses):
     return f"data:image/png;base64,{encoded_chart}"
 
 # View for detailed expense analysis
-@login_required
 def expense_analysis(request):
-    expenses = Expense.objects.filter(user=request.user)
+    expenses = Expense.objects.all()
     total_expense = sum(exp.amount for exp in expenses)
     expense_chart = generate_pie_chart(expenses)
 
@@ -45,12 +43,11 @@ def expense_analysis(request):
     })
 
 # View to list all expenses
-@login_required
 def expense_list(request):
-    expenses = Expense.objects.filter(user=request.user)
+    expenses = Expense.objects.all()
     total_expense = sum(exp.amount for exp in expenses)
     
-    salary_obj, created = Salary.objects.get_or_create(user=request.user, defaults={'amount': 0})
+    salary_obj, created = Salary.objects.get_or_create(defaults={'amount': 0})
     money_left = salary_obj.amount - total_expense
 
     return render(request, 'Expense/list.html', {
@@ -61,14 +58,11 @@ def expense_list(request):
     })
 
 # View to add a new expense with date selection
-@login_required
 def add_expense(request):
     if request.method == "POST":
         form = ExpenseForm(request.POST)
         if form.is_valid():
-            expense = form.save(commit=False)
-            expense.user = request.user  # Assign the expense to the logged-in user
-            expense.save()
+            form.save()
             return redirect('expense_list')
     else:
         form = ExpenseForm()
@@ -76,18 +70,16 @@ def add_expense(request):
     return render(request, 'Expense/add.html', {'form': form})
 
 # View to delete an expense
-@login_required
 def delete_expense(request, id):
-    expense = get_object_or_404(Expense, id=id, user=request.user)
+    expense = get_object_or_404(Expense, id=id)
     if request.method == 'POST':
         expense.delete()
         return redirect('expense_list')
     return render(request, 'Expense/delete.html', {'expense': expense})
 
 # View to set or update the monthly salary
-@login_required
 def set_salary(request):
-    salary, created = Salary.objects.get_or_create(user=request.user, defaults={'amount': 0})
+    salary, created = Salary.objects.get_or_create(id=1, defaults={'amount': 0})
 
     if request.method == "POST":
         form = SalaryForm(request.POST, instance=salary)
