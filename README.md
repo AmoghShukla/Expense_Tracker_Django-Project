@@ -19,4 +19,27 @@ The **Expense Tracker** is a Django-based web application that helps users track
 - **Database**: SQLite / PostgreSQL
 - **Other Dependencies**: Gunicorn, Whitenoise, Django ORM, Matplotlib
 
+## 🏗️ Installation & Setup
 
+### 🔹 Clone the Repository
+```sh
+git clone https://github.com/AmoghShukla/Expense_Tracker_Django-Project.git
+cd Expense_Tracker_Django-Project
+```
+
+### 🔹 Create and Activate Virtual Environment
+```sh
+python -m venv venv
+source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+```
+
+### 🔹 Install Dependencies
+```sh
+pip install -r requirements.txt
+```
+
+### 🔹 Apply Migrations & Run Server
+```sh
+python manage.py migrate
+python manage.py runserver
+```
