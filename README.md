@@ -1,7 +1,5 @@
 # Expense Tracker - Django Project
 
-![Expense Tracker](https://your-project-image-url.com)
-
 ## 📌 Overview
 The **Expense Tracker** is a Django-based web application that helps users track their expenses, manage their budget, and gain insights into their spending habits. This project includes real-time expense tracking, a monthly salary input feature, and graphical analysis.
 
@@ -57,6 +55,11 @@ This project is deployed using **Render**. To deploy manually:
 2. Connect the repository to Render.
 3. Set up environment variables.
 4. Deploy and monitor logs.
+
+## UI 
+![Expense Tracker]![image](https://github.com/user-attachments/assets/e2cac855-15f1-4a89-b1d1-5d33e415dda8)
+![image](https://github.com/user-attachments/assets/66721af7-a488-431e-aa9d-7793e334f7ad)
+
 
 ## 💡 Future Enhancements
 - ✅ Expense Filtering & Sorting
