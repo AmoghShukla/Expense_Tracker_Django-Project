@@ -43,3 +43,35 @@ pip install -r requirements.txt
 python manage.py migrate
 python manage.py runserver
 ```
+
+
+### 🔹 Access the App
+Open `http://127.0.0.1:8000/` in your browser.
+
+## 📊 Screenshots
+(Include relevant screenshots of your app here)
+
+## 🔥 Deployment
+This project is deployed using **Render**. To deploy manually:
+1. Push code to GitHub.
+2. Connect the repository to Render.
+3. Set up environment variables.
+4. Deploy and monitor logs.
+
+## 💡 Future Enhancements
+- ✅ Expense Filtering & Sorting
+- ✅ Custom Expense Categories
+- ✅ Export Data to CSV/Excel
+- ✅ AI-based Spending Suggestions
+
+## 🤝 Contributing
+Contributions are welcome! Feel free to open issues or submit pull requests.
+
+## 📜 License
+This project is licensed under the MIT License.
+
+## 📬 Contact
+👤 **Amogh Shukla**  
+📧 [Your Email](amoghshukla548@gmail.com)  
+🔗 [LinkedIn Profile](https://linkedin.com/in/your-profile)  
+🌐 [GitHub Profile](https://github.com/AmoghShukla)
