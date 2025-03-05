@@ -13,9 +13,9 @@ from io import BytesIO
 
 
 def logout_view(request):
-    if request.method == "POST":  # Ensure logout happens only via POST
+    if request.method == "POST":  
         logout(request)
-        return redirect('signup')  # Redirect to signup or login page
+        return redirect('signup')  
     return redirect('expense_list')
 
 
@@ -31,23 +31,23 @@ def signup(request):
     
     return render(request, 'accounts/signup.html', {'form': form})
 
-# Function to generate a pie chart for expense categories
+
 def generate_pie_chart(expenses):
     category_totals = {}
 
     for expense in expenses:
-        # Ensure expense.category is valid before accessing name
+        
         if isinstance(expense.category, Category):
             category = expense.category.name
         elif isinstance(expense.category, str):
             category = expense.category
         else:
-            category = "Uncategorized"  # Default if category is missing
+            category = "Uncategorized"  
 
         category_totals[category] = category_totals.get(category, 0) + expense.amount
 
     if not category_totals:
-        return None  # No data to display
+        return None  
 
     fig, ax = plt.subplots()
     colors = ["#FF5733", "#33FF57", "#3357FF", "#F333FF", "#57FFF3", "#FFC300"]
@@ -65,7 +65,7 @@ def generate_pie_chart(expenses):
 
 
 
-# View for detailed expense analysis
+
 @login_required
 def expense_analysis(request):
     expenses = Expense.objects.filter(user=request.user)  # Fetch only logged-in user's expenses
@@ -92,14 +92,14 @@ def expense_list(request):
         'total_expense': total_expense
     })
 
-# View to add a new expense with date selection
+
 @login_required
 def add_expense(request):
     if request.method == "POST":
         form = ExpenseForm(request.POST)
         if form.is_valid():
             expense = form.save(commit=False)
-            expense.user = request.user  # Assign the logged-in user
+            expense.user = request.user  
             expense.save()
             return redirect('expense_list')
     else:
@@ -107,7 +107,7 @@ def add_expense(request):
 
     return render(request, 'Expense/add.html', {'form': form})
 
-# View to delete an expense
+
 def delete_expense(request, id):
     expense = get_object_or_404(Expense, id=id)
     if request.method == 'POST':
@@ -115,7 +115,7 @@ def delete_expense(request, id):
         return redirect('expense_list')
     return render(request, 'Expense/delete.html', {'expense': expense})
 
-# View to set or update the monthly salary
+
 @login_required
 def set_salary(request):
     salary, created = Salary.objects.get_or_create(user=request.user, defaults={'amount': 0})
