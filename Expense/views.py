@@ -93,6 +93,7 @@ def expense_list(request):
     })
 
 
+
 @login_required
 def add_expense(request):
     if request.method == "POST":
